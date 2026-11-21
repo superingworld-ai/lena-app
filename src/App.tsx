@@ -147,6 +147,14 @@ function App(): React.JSX.Element {
   const [hugCount, setHugCount] = useState(0);
   const [muted, setMutedState] = useState(false);
   const [visible, setVisible] = useState(true);
+  const avatarProgress = Math.min(hugCount / 12, 1);
+  const avatarStyle: React.CSSProperties = {
+    ['--avatar-contrast' as string]: `${1.02 + avatarProgress * 0.3}`,
+    ['--avatar-saturation' as string]: `${1.04 + avatarProgress * 0.25}`,
+    ['--avatar-brightness' as string]: `${0.98 + avatarProgress * 0.06}`,
+    ['--avatar-ring-opacity' as string]: `${0.32 + avatarProgress * 0.48}`,
+    ['--avatar-glow' as string]: `${0.16 + avatarProgress * 0.22}`,
+  };
 
   const hug = useCallback(() => {
     playChime();
@@ -187,7 +195,19 @@ function App(): React.JSX.Element {
 
       <ParticleLayer />
 
-      <main className="relative z-10 flex w-full max-w-xl flex-col items-center gap-10 text-center">
+      <main className="relative z-10 flex w-full max-w-xl flex-col items-center gap-8 text-center sm:gap-10">
+        <div className="avatar-frame animate-float-in" style={avatarStyle}>
+          <div className="avatar-ring" aria-hidden="true" />
+          <img
+            src="/images/photo_2026-07-08_20-40-12.jpg"
+            alt="Нежный портрет с розовыми пионами"
+            className="avatar-photo"
+            width={224}
+            height={224}
+          />
+          <div className="avatar-shine" aria-hidden="true" />
+        </div>
+
         <h1 className="animate-float-in font-[family-name:var(--font-display)] text-4xl font-semibold tracking-wide text-rosewood-600 sm:text-5xl">
           Я рядом с тобой
         </h1>
